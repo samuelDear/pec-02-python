@@ -25,7 +25,7 @@ OPTIONS = [
     {
         "value": "0",
         "label": "Salir",
-        "action": lambda *args: None
+        "action": lambda *args: False
     }
 ]
 
@@ -33,3 +33,24 @@ def menuOptions():
     # Pintamos las opciones
     for option in OPTIONS:
         print(f"{Style.BRIGHT}> {option["value"]}. {option["label"]}.")
+        
+def validateOption(val: str) -> None:
+    validOption = False
+    
+    for option in OPTIONS:
+        if option["value"] == val:
+            validOption = True
+    
+    # Si no es una opcion valida, damos error
+    if not validOption:
+        raise Exception(f"Valor {val} no es una opcion valida.")
+    
+    
+def runOptionAction(val: str) -> bool:
+    for option in OPTIONS:
+        if option["value"] == val:
+            return option["action"]()
+            
+    # Si no es ninguna, que repita el flujo
+    return True
+    

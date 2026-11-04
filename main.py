@@ -1,6 +1,9 @@
-import colorama
-from colorama import Fore, Style
+from app.menu import showMenu
+from colorama import init, just_fix_windows_console
 
-colorama.init(autoreset=True)
+# Config de colorama
+just_fix_windows_console()
+init(autoreset=True)
 
-print(f"{Fore.GREEN}Hola")
+# Inicio
+showMenu()
