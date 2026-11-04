@@ -4,6 +4,11 @@ import os
 from app.menuoptions import menuOptions, runOptionAction, validateOption
 
 def showTitle() -> None:
+    """
+    Funcion que imprime el titulo del proyecto
+    Retorna:
+        None
+    """
     print("\033[0;37m█▀▀▀▀▀▀▀█  ▄▀▀▀▀▄  █▀▀▀▀▀▄   ▄▀▀▀▀▀█  ▄▀▀▀▀▄  ▄▀▀▀▀▀█       ▄▀▀▀▀▀█ █▀█      █▀▀▀▀▀█\033[0m")
     print("\033[0;37m▀▀▀█ █▀▀▀ ▓ ▄▀▀▄ ▓ ▓ █▀▀▄ █ ▓ ▄▀▀█▄█ ▓ ▄▀▀▄ ▓ ▓ █▀▀▀▀      ▓ ▄▀▀█ █ █ ▓      ▀▀█ █▀▀\033[0m")
     print("\033[0;37m   \033[0;92m▓\033[0;37m \033[0;92m█\033[0;37m    \033[0;92m▒\033[0;37m \033[0;92m█\033[0;37m  \033[0;92m█\033[0;37m \033[0;92m▒\033[0;37m \033[0;92m▒\033[0;37m \033[0;92m█▄▄▀\033[0;37m \033[0;92m█\033[0;37m \033[0;92m▒\033[0;37m \033[0;92m█▄▄\033[0;37m    \033[0;92m▒\033[0;37m \033[0;92m█\033[0;37m  \033[0;92m█\033[0;37m \033[0;92m▒\033[0;37m \033[0;92m▒\033[0;37m \033[0;92m▀▄\033[0;37m         \033[0;92m▒\033[0;37m \033[0;92m█\033[0;37m  \033[0;92m█\033[0;37m \033[0;92m█\033[0;37m \033[0;92m▓\033[0;37m \033[0;92m▒\033[0;37m        \033[0;92m▓\033[0;37m \033[0;92m▒\033[0;37m  \033[0m")
@@ -14,11 +19,24 @@ def showTitle() -> None:
     print("\033[0;37m   \033[0;32m▀▀▀\033[0;37m    \033[0;32m▀▀▀\033[0;37m  \033[0;32m▀▀▀\033[0;37m \033[0;32m▀▀▀\033[0;37m  \033[0;32m▀▀▀\033[0;37m   \033[0;32m▀▀▀▀▀▀\033[0;37m \033[0;32m▀▀▀\033[0;37m  \033[0;32m▀▀▀\033[0;37m \033[0;32m▀▀▀▀▀▀\033[0;37m         \033[0;32m▀▀▀▀▀▀\033[0;37m \033[0;32m▀▀▀▀▀▀▀▀\033[0;37m \033[0;32m▀▀▀▀▀▀▀\033[0m")
 
 def clearConsole() -> None:
+    """
+    Funcion para limpiar la consola donde se ejecute
+    Retorna:
+        None
+    """
     os.system('cls' if os.name == "nt" else None)
 
-def showMenu():
+
+def showMenu() -> None:
+    """
+    Funcion para agrupar y ejecutar las funciones necesarias para mostrarle
+    al usuario el menu de la app
+    Retorna:
+        None
+    """
     # Declaracion de variables
     option = None
+    tareas = []
     
     while True:
         # Limpiamos al iniciar la app siempre
@@ -48,11 +66,15 @@ def showMenu():
         # Le damos la opcion de continuar...
         input(f"\n{Style.DIM}Presione enter para continuar....")
         
-        
-    
 def inputOption() -> str:
+    """
+    Funcion para capturar la opcion ingresada por el usuario,
+    aca se valida que sea un valor valido
+    Retorna:
+        str: la opcion valida ingresada por el usuario
+    """
     # Pedimos la opcion y si no damos error
-    option = None
+    option = ""
     while True:
         try:
             option = input(f"> Ingrese una opcion: ")
@@ -64,3 +86,16 @@ def inputOption() -> str:
                 print(f"{Fore.RED}[ERROR]: {e}\n")       
     
     return option
+
+if __name__ == "__main__":
+    """
+    Prueba de docstrings
+    """
+    
+    help(inputOption)
+    print("*" * 64)
+    help(showMenu)
+    print("*" * 64)
+    help(clearConsole)
+    print("*" * 64)
+    help(showTitle)
