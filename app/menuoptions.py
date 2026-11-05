@@ -1,6 +1,6 @@
 
 from colorama import Style
-from app.operaciones import añadir_tarea, listar_tareas, eliminar_tarea
+from app.operaciones import añadir_tarea, listar_tareas, eliminar_tarea, buscar_tarea
 
 OPTIONS = [
     {
@@ -21,7 +21,7 @@ OPTIONS = [
     {
         "value": "4",
         "label": "Buscar tarea por palabra clave",
-        "action": lambda *args: None
+        "action": buscar_tarea
     },
     {
         "value": "0",
@@ -31,11 +31,21 @@ OPTIONS = [
 ]
 
 def menuOptions() -> None:
+    """
+    Funcion para imprimir las diferentes opciones del programa
+    Retorna:
+        None
+    """
     # Pintamos las opciones
     for option in OPTIONS:
         print(f"{Style.BRIGHT}> {option["value"]}. {option["label"]}.")
         
 def validateOption(val: str) -> None:
+    """
+    Funcion para validar que la opcion ingresada es valida
+    Retorna:
+        None
+    """
     validOption = False
     
     for option in OPTIONS:
@@ -48,6 +58,11 @@ def validateOption(val: str) -> None:
     
     
 def runOptionAction(val: str) -> bool:
+    """
+    Funcion para ejecutar la funcionalidad de la opcion ingresada
+    Retorna:
+        bool
+    """
     for option in OPTIONS:
         if option["value"] == val:
             return option["action"]()
