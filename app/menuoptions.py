@@ -1,21 +1,22 @@
 
 from colorama import Style
+from app.operaciones import añadir_tarea, listar_tareas, eliminar_tarea
 
 OPTIONS = [
     {
         "value": "1",
         "label": "Añadir tarea",
-        "action": lambda *args: None
+        "action": añadir_tarea
     },
     {
         "value": "2",
-        "label": "Eliminar",
-        "action": lambda *args: None
+        "label": "Eliminar tarea",
+        "action": eliminar_tarea
     },
     {
         "value": "3",
         "label": "Listar tarea",
-        "action": lambda *args: None
+        "action": listar_tareas
     },
     {
         "value": "4",
@@ -29,7 +30,7 @@ OPTIONS = [
     }
 ]
 
-def menuOptions():
+def menuOptions() -> None:
     # Pintamos las opciones
     for option in OPTIONS:
         print(f"{Style.BRIGHT}> {option["value"]}. {option["label"]}.")

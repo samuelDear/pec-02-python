@@ -55,7 +55,6 @@ def showMenu() -> None:
         
         res = runOptionAction(option)
         
-        print('\n')
         print(f"{Fore.GREEN}{"*" * 64}")
         
         # Si la funcion retorna False, es que es la de salida
