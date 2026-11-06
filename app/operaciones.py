@@ -3,14 +3,23 @@ from colorama import Fore, Style
 from app.modelos import Tarea
 
 # Funciones
-def añadir_tarea(*args: Any) -> Tarea:
+def añadir_tarea(*args: Any, **kwargs: Any) -> Tarea:
     """
     Agregar una tarea registrando datos requeridos y opcionales
+    Parametros agregados para el correcto funcionamiento del programa
+    Args:
+        *args: Any
+        **kwargs: Any
     Retorna:
         Class Tarea
     """
     tarea = ''
     extradata = {}
+
+    # Si vienen metadatos en kwargs, por pruebas, lo colocamos con data extra
+    if kwargs:
+        extradata.update(kwargs)
+
     try:
         separatorPrint()
         print(f"{Fore.BLUE}- NUEVA TAREA\n")
@@ -64,7 +73,7 @@ def listar_tareas(tareas: List[Tarea] = []) -> bool:
     """
     Funcion para listar todas las tareas registradas
     Retorna:
-        None
+        bool
     """
     
     separatorPrint()
@@ -79,7 +88,7 @@ def listar_tareas(tareas: List[Tarea] = []) -> bool:
     print("")
     return True
 
-def showListTareas(tareasArr: List[Tarea] = []) -> None:
+def showListTareas(tareasArr: List[Tarea]) -> None:
     """
     Funcion para mostrar cada una de las tareas ingresadas
     """
@@ -127,11 +136,19 @@ def buscar_tarea(tareas: List[Tarea] = []) -> bool:
     
     # Imprimimos lo que encontramos
     print(f"\n{Style.BRIGHT}Tareas encontradas ({len(findedTareas)}): \n")
-    showListTareas(tareasArr = findedTareas)
+    index = 0
+    for tarea in findedTareas:
+        correctId = tareas.index(tarea)
+        print(f"- ID: {Style.BRIGHT}{correctId}")
+        print(f"{tarea}")
+        index += 1
+        if index != len(findedTareas):
+            print(f"{Style.DIM}{"**" * 32}")
     
+    print("")
     return True
     
-def isTareasEmpty(tareas: List[Tarea] = []) -> bool:
+def isTareasEmpty(tareas: List[Tarea]) -> bool:
     """
     Funcion para validar si hay tareas
     """
@@ -148,6 +165,7 @@ def eliminar_tarea(tareas: List[Tarea] = []) -> bool:
     Retorna:
         bool
     """
+    
     
     separatorPrint()
     print(f"{Fore.BLUE}- ELIMINAR TAREA\n")
@@ -189,3 +207,12 @@ def eliminar_tarea(tareas: List[Tarea] = []) -> bool:
             print(f"{Fore.RED}[ERROR]: {e}\n")
 
     return True
+
+
+if __name__ == "__main__":
+    """
+    Prueba de docstrings
+    """
+    
+    help(añadir_tarea)
+    tarea = añadir_tarea(nota = "Prueba")
