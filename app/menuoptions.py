@@ -1,6 +1,7 @@
 
 from colorama import Style
 from app.operaciones import añadir_tarea, listar_tareas, eliminar_tarea, buscar_tarea
+from app.modelos import Tarea 
 
 OPTIONS = [
     {
@@ -57,7 +58,7 @@ def validateOption(val: str) -> None:
         raise Exception(f"Valor {val} no es una opcion valida.")
     
     
-def runOptionAction(val: str) -> bool:
+def runOptionAction(val: str, *args) -> bool | Tarea:
     """
     Funcion para ejecutar la funcionalidad de la opcion ingresada
     Retorna:
@@ -65,7 +66,7 @@ def runOptionAction(val: str) -> bool:
     """
     for option in OPTIONS:
         if option["value"] == val:
-            return option["action"]()
+            return option["action"](*args)
             
     # Si no es ninguna, que repita el flujo
     return True

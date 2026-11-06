@@ -1,6 +1,7 @@
 from colorama import Fore, Style
 import os
 
+from app.modelos import Tarea
 from app.menuoptions import menuOptions, runOptionAction, validateOption
 
 def showTitle() -> None:
@@ -53,13 +54,16 @@ def showMenu() -> None:
         
         option = inputOption()
         
-        res = runOptionAction(option)
+        res = runOptionAction(option, tareas)
         
         print(f"{Fore.GREEN}{"*" * 64}")
         
         # Si la funcion retorna False, es que es la de salida
         if res == False:
             break
+        elif type(res) == Tarea:
+            # Si es una instancia de tarea, lo colocamos en el arreglo
+            tareas.append(res)
             
         # Si no entro en el break
         # Le damos la opcion de continuar...

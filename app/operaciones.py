@@ -1,11 +1,9 @@
-from typing import Any, Dict
+from typing import Any, List
 from colorama import Fore, Style
 from app.modelos import Tarea
 
-tareas = []
-
 # Funciones
-def añadir_tarea() -> Tarea:
+def añadir_tarea(*args: Any) -> Tarea:
     """
     Agregar una tarea registrando datos requeridos y opcionales
     Retorna:
@@ -41,10 +39,7 @@ def añadir_tarea() -> Tarea:
             extradata[keyFormatted] = val
         
         print(f"\n{Fore.BLUE}- AÑADIR TAREA FINALIZADO\n")
-        tareaInstance = Tarea(tarea, **extradata)
-        
-        tareas.append(tareaInstance)
-        return tareaInstance
+        return Tarea(tarea, **extradata)
     except Exception as e:
         print(f"{Fore.RED}[ERROR]: {e}\n")
     
@@ -65,7 +60,7 @@ def notAllowEmptyVal(label: str, field: str = "campo") -> str:
         # Si llego aqui es que tiene data
         return value
     
-def listar_tareas() -> None:
+def listar_tareas(tareas: List[Tarea] = []) -> bool:
     """
     Funcion para listar todas las tareas registradas
     Retorna:
@@ -76,14 +71,15 @@ def listar_tareas() -> None:
     print(f"{Fore.BLUE}- LISTAR TAREAS")
     print("\nListado de tareas:")
     
-    if isTareasEmpty():
+    if isTareasEmpty(tareas):
         return True
         
-    showListTareas()
+    showListTareas(tareasArr = tareas)
     
     print("")
+    return True
 
-def showListTareas(tareasArr = tareas) -> None:
+def showListTareas(tareasArr: List[Tarea] = []) -> None:
     """
     Funcion para mostrar cada una de las tareas ingresadas
     """
@@ -95,14 +91,14 @@ def showListTareas(tareasArr = tareas) -> None:
         if index != len(tareasArr):
             print(f"{Style.DIM}{"**" * 32}")
         
-        
+       
 def separatorPrint() -> None:
     """
     Funcion para imprimir una separacion entre cada funcionalidad
     """
     print(f"\n{Fore.GREEN}{"*" * 64}\n")
     
-def buscar_tarea() -> bool:
+def buscar_tarea(tareas: List[Tarea] = []) -> bool:
     """
     Funcion para buscar alguna tarea en concreto
     Retorna:
@@ -112,7 +108,7 @@ def buscar_tarea() -> bool:
     separatorPrint()
     print(f"{Fore.BLUE}- BUSCAR TAREAS\n")
     
-    if isTareasEmpty():
+    if isTareasEmpty(tareas):
         return True
     
     # Validamos si alguna o algunas tareas tienen la palabra ingresada por el usuario
@@ -121,7 +117,7 @@ def buscar_tarea() -> bool:
     # Recorremos cada tarea y vemos si coincide algo
     findedTareas = []
     for tarea in tareas:
-        if search in tarea.tarea:
+        if search.lower() in tarea.tarea.lower():
             findedTareas.append(tarea)
     
     # validamos si se encontro algo
@@ -130,12 +126,12 @@ def buscar_tarea() -> bool:
         return True
     
     # Imprimimos lo que encontramos
-    print(f"\n{Style.BRIGHT}Tareas encontradas: \n")
+    print(f"\n{Style.BRIGHT}Tareas encontradas ({len(findedTareas)}): \n")
     showListTareas(tareasArr = findedTareas)
     
     return True
     
-def isTareasEmpty() -> bool:
+def isTareasEmpty(tareas: List[Tarea] = []) -> bool:
     """
     Funcion para validar si hay tareas
     """
@@ -146,7 +142,7 @@ def isTareasEmpty() -> bool:
     
     return False
     
-def eliminar_tarea() -> bool:
+def eliminar_tarea(tareas: List[Tarea] = []) -> bool:
     """
     Funcion para eliminar una tarea por su Index
     Retorna:
@@ -157,11 +153,11 @@ def eliminar_tarea() -> bool:
     print(f"{Fore.BLUE}- ELIMINAR TAREA\n")
     
     # Validamos si hay tareas, si no mostramos un mensaje
-    if isTareasEmpty():
+    if isTareasEmpty(tareas):
         print("\n")
         return True
     
-    showListTareas()
+    showListTareas(tareas)
     
     index = ''
     
@@ -173,6 +169,7 @@ def eliminar_tarea() -> bool:
             index = input("> ID de la tarea: ")
             
             if index == '':
+                print(f"\n- {Fore.CYAN}Operacion cancelada\n")
                 break
             
             index = int(index)
@@ -183,7 +180,7 @@ def eliminar_tarea() -> bool:
                 
             del tareas[index]
             
-            print(f"{Fore.BLUE}La tarea con ID {index} ha sido eliminada")
+            print(f"- {Fore.BLUE}La tarea con ID {index} ha sido eliminada\n")
             
             break
         except ValueError as e:
